@@ -9,12 +9,12 @@ env_dir = path.join(path.dirname(path.dirname(path.dirname(__file__))), 'app/.en
 env_files_content = {}
 
 def run_data_collection(config_dict):
-    match config_dict.get("DATA_SOURCE"):
-        case "shelterluv":
-            print("Collecting data from Shelterluv...")
-            collect_shelterluv_data(config_dict)
-        case _:
-            print("Unknown data source specified.")
+    data_source = config_dict.get("DATA_SOURCE")
+    if data_source == "shelterluv":
+        print("Collecting data from Shelterluv...")
+        collect_shelterluv_data(config_dict)
+    else:
+        print("Unknown data source specified.")
     
 def run_all_data_collections():
     for filename in os.listdir(env_dir):
