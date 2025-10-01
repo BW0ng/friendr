@@ -13,10 +13,10 @@ class UserPreferences(BaseModel):
 class Pet(BaseModel):
     type: Literal["dog", "cat"]
     name: str
-    age: int
+    age: int  # Age in years
     breed: str
     size: str
-    weight: float
+    weight: Optional[float] = None
     dogs: int  # 1-5 comfort level with dogs
     cats: int  # 1-5 comfort level with cats
     kids: int  # 1-5 comfort level with kids

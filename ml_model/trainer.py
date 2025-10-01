@@ -5,7 +5,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from pathlib import Path
 
-DATA_PATH = Path("data/pet_data.csv")
+DATA_PATH = Path("data/friends4life_shelterluv_animals.csv")
 SAVE_DIR = Path("saved_models")
 SAVE_DIR.mkdir(exist_ok=True)
 
@@ -16,8 +16,11 @@ def train_and_save_models():
     print(f"Original dataset shape: {df.shape}")
     print(f"Original dataset size: {len(df)} rows, {len(df.columns)} columns")
     
-    # Convert type column to lowercase for consistency
-    df['type'] = df['type'].str.lower()
+    # Convert species column to lowercase and rename to type for consistency
+    df['type'] = df['species'].str.lower()
+    
+    # Filter to only include dogs and cats
+    df = df[df['type'].isin(['dog', 'cat'])]
     
     # Check for duplicates based on name and personality ratings only
     # (excluding physical characteristics like age, weight, breed, size)
