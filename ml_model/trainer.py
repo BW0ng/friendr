@@ -5,7 +5,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from pathlib import Path
 
-DATA_PATH = Path("data/pet_data.csv")
+DATA_PATH = Path("data/friends4life_shelterluv_animals.csv")
 SAVE_DIR = Path("saved_models")
 SAVE_DIR.mkdir(exist_ok=True)
 
@@ -29,8 +29,8 @@ def train_and_save_models():
         "kids",
         "energy",
         "affection",
-        "training",
-        "new_people"
+        "new_people",
+        "training"
     ]
     
     # Find duplicates based on personality profile

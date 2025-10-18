@@ -19,6 +19,7 @@ def load_model(pet_type: str):
 def predict_match(user_input: dict, pet_type: str, pet_data: pd.DataFrame):
     # Load appropriate model + scaler
     (kmeans, scaler) = load_model(pet_type)
+    print(f"Loaded model for pet_type: {pet_type}")
 
     # Use the correct feature columns that match the training data
     feature_cols = [
@@ -34,18 +35,23 @@ def predict_match(user_input: dict, pet_type: str, pet_data: pd.DataFrame):
     # Convert user input into numpy array and scale
     user_vector = np.array([[user_input[col] for col in feature_cols]])
     user_vector_scaled = scaler.transform(user_vector)
+    print(f"User vector (scaled): {user_vector_scaled}")
 
     # Predict cluster for user
     cluster = kmeans.predict(user_vector_scaled)[0]
+    print(f"User assigned to cluster: {cluster}")
 
     # Filter pets of that type
     pets = pet_data[pet_data["type"] == pet_type]
+    print(f"Number of pets of type '{pet_type}': {len(pets)}")
 
     # Scale the pet dataset with the same scaler
     pets_scaled = scaler.transform(pets[feature_cols])
+    print(f"Scaled pet features shape: {pets_scaled.shape}")
 
     # Compute similarity (Euclidean distance to user_vector)
     distances = np.linalg.norm(pets_scaled - user_vector_scaled, axis=1)
+    print(f"Computed distances: {distances}")
 
     # Convert distances to similarity %
     similarities = 100 * (1 - (distances / distances.max()))
@@ -53,6 +59,7 @@ def predict_match(user_input: dict, pet_type: str, pet_data: pd.DataFrame):
     # Attach similarity to pets
     pets = pets.copy()
     pets["match_percentage"] = similarities
+    print(f"Pets with match percentages calculated: \n{pets}")
 
     # Return top 6 matches (configurable - change head(6) to head(n) for different number)
     top_matches = pets.sort_values("match_percentage", ascending=False).head(NUM_MATCHES)

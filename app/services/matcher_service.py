@@ -3,7 +3,7 @@ import pandas as pd
 from pathlib import Path
 from ml_model import predict_match
 
-DATA_PATH = Path("data/pet_data.csv")
+DATA_PATH = Path("data/friends4life_shelterluv_animals.csv")
 
 def match_pet(user_input: dict):
     """
@@ -27,7 +27,9 @@ def match_pet(user_input: dict):
     result = []
     for pet in matches:
         # Convert age from months to years and round to nearest whole number
-        age_in_years = round(pet["age"] / 12)
+        # age_in_years = round(pet["age"] / 12)
+        
+        age_in_years = pet["age"]  # Keep in months for more precise display
         
         # Boost match percentage by 40% for demo purposes
         boosted_percentage = min(100.0, pet["match_percentage"] + 40.0)

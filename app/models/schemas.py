@@ -9,6 +9,7 @@ class UserPreferences(BaseModel):
     energy: int = Field(..., ge=1, le=5, description="Energy level preference (1-5)")
     affection: int = Field(..., ge=1, le=5, description="Affection level preference (1-5)")
     training: int = Field(..., ge=1, le=5, description="Training commitment level (1-5)")
+    new_people: int = Field(..., ge=1, le=5, description="Comfort level with new people (1-5)")
 
 class Pet(BaseModel):
     type: Literal["dog", "cat"]
@@ -22,6 +23,7 @@ class Pet(BaseModel):
     kids: int  # 1-5 comfort level with kids
     energy: int  # 1-5 energy level
     affection: int  # 1-5 affection level
+    new_people: int  # 1-5 comfort level with new people
     training: int  # 1-5 training commitment
     match_percentage: Optional[float] = None
     image_url: Optional[str] = None
@@ -34,6 +36,7 @@ class PetMatch(BaseModel):
     weight: float
     energy: int  # 1-5 energy level
     affection: int  # 1-5 affection level
+    new_people: int  # 1-5 comfort level with new people
     training: int  # 1-5 training commitment
     match_percentage: float
     image_url: Optional[str] = None

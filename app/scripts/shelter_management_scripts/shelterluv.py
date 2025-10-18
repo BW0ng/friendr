@@ -59,9 +59,18 @@ def transform_data(data):
         transformed_animal['type'] = animal.Type
         transformed_animal['name'] = animal.Name
         transformed_animal['age'] = animal.Age
-        transformed_animal['breed'] = animal.Breed
-        transformed_animal['size'] = animal.Size
-        transformed_animal['weight'] = animal.CurrentWeightPounds
+        if animal.Breed is None or animal.Breed.strip() == "":
+            transformed_animal['breed'] = "Unknown"
+        else:
+            transformed_animal['breed'] = animal.Breed
+        if animal.Size is None or animal.Size.strip() == "":
+            transformed_animal['size'] = "Unknown"
+        else:
+            transformed_animal['size'] = animal.Size
+        if animal.CurrentWeightPounds is None or animal.CurrentWeightPounds == "":
+            transformed_animal['weight'] = 0.0  # Default to 0.1 if weight is missing
+        else:
+            transformed_animal['weight'] = animal.CurrentWeightPounds
         transformed_animal['image_url'] = animal.CoverPhoto
 
         get_attributes(animal, transformed_animal)
@@ -132,7 +141,11 @@ def get_attributes(animal, transformed_animal):
             transformed_animal['new_people'] = m.group(1)
         
     # print("Transformed animal: {}".format(transformed_animal))
-    
+    attributes = ['kids', 'dogs', 'cats', 'energy', 'affection', 'new_people', 'training']
+    for attr in attributes:
+        if attr not in transformed_animal:
+           transformed_animal[attr] = 2  # Default to 2
+
     transformed_animal['training'] = 3  # Default to 3
 
 def collect_data(config):
